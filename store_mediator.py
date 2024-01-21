@@ -19,6 +19,10 @@ class StoreMediator:
         return mensaje_respuesta
     
     def enviar_mensajes_pendientes(self):
+        isConnected = kafka_instance.validar_conexion_kafka()
+        if(isConnected == False):
+            return 'No esta disponible el servicio de Kafka'
+    
         mensajes = rabbit_instance.leer_mensajes()
         if len(mensajes) == 0:
             return 'No hay mensajes pendientes'
